@@ -4,6 +4,7 @@ import styled, { ThemeProvider, injectGlobal } from 'styled-components';
 import Meta from './Meta';
 import Header from './Header';
 
+// NOTE: a theme is an object. Values must be a string.
 const theme = {
 	red: '#FF0000',
 	black: '#393939',
@@ -46,6 +47,7 @@ const StyledPage = styled.div`
 	color: ${(props) => props.theme.black};
 `;
 
+// setting fixed width to body of the app
 const Inner = styled.div`
 	max-width: ${(props) => props.theme.maxWidth};
 	margin: 0 auto;
