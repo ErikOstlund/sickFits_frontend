@@ -1,11 +1,10 @@
-// This is a Stateless Functional Components
+// This is a Stateless Functional Component
 // Next.js takes care of importing React for us
-
-import Link from 'next/link';
+import Items from '../components/Items';
 
 const Home = (props) => (
 	<div>
-		<p>Home</p>
+		<Items />
 	</div>
 );
 
