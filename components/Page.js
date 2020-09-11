@@ -12,7 +12,7 @@ const theme = {
 	lightgrey: '#E1E1E1',
 	offWhite: '#EDEDED',
 	maxWidth: '1000px',
-	boxShadow: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
+	boxShadow: '0 12px 24px 0 rgba(0, 0, 0, 0.09)'
 };
 
 injectGlobal`
@@ -52,7 +52,6 @@ const Inner = styled.div`
 	max-width: ${(props) => props.theme.maxWidth};
 	margin: 0 auto;
 	padding: 2rem;
-	background: orangered;
 `;
 
 class Page extends Component {
