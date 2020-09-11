@@ -28,17 +28,47 @@ const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends Component {
 	state = {
-		title: 'GI Joe',
-		description: 'A real american Hero',
-		image: 'joe.jpg',
-		largeImage: 'joe-lg.jpg',
-		price: 10000
+		title: '',
+		description: '',
+		image: '',
+		largeImage: '',
+		price: ''
 	};
 
-	handleChange = (e) => {
+	handleChange = async (e) => {
 		const { name, type, value } = e.target;
 		const val = type === 'number' ? parseFloat(value) : value;
 		this.setState({ [name]: val });
+	};
+
+	uploadFile = async (e) => {
+		console.log('uploading file...');
+		// get the file
+		const files = e.target.files;
+		// use javascript's form data api to prep data
+		const data = new FormData();
+		data.append('file', files[0]);
+		// add upload preset from Cloudinary
+		data.append('upload_preset', 'sickfits');
+
+		// connect to Cloudianry api
+		const res = await fetch(
+			'https://api.cloudinary.com/v1_1/eostlund/image/upload',
+			{
+				method: 'POST',
+				body: data
+			}
+		);
+
+		// parse the returned data into json
+		const file = await res.json();
+		console.log(file);
+
+		// set the state
+		this.setState({
+			image: file.secure_url,
+			largeImage: file.eager[0].secure_url
+		});
 	};
 
 	render() {
@@ -62,6 +92,22 @@ class CreateItem extends Component {
 						<h2>Sell an Item</h2>
 						<ErrorMessage error={error} />
 						<fieldset disabled={loading} aria-busy={loading}>
+							<label htmlFor='file'>
+								Image
+								<input
+									type='file'
+									id='file'
+									name='file'
+									placeholder='Upload an Image'
+									onChange={this.uploadFile}
+									required
+								/>
+								{/* Image Preview */}
+								{this.state.image && (
+									<img width='70' src={this.state.image} alt='Upload Preview' />
+								)}
+							</label>
+
 							<label htmlFor='title'>
 								Title
 								<input
@@ -74,6 +120,7 @@ class CreateItem extends Component {
 									required
 								/>
 							</label>
+
 							<label htmlFor='price'>
 								Price
 								<input
@@ -86,6 +133,7 @@ class CreateItem extends Component {
 									required
 								/>
 							</label>
+
 							<label htmlFor='description'>
 								Description
 								<textarea
@@ -97,6 +145,7 @@ class CreateItem extends Component {
 									required
 								/>
 							</label>
+
 							<button type='submit'>Submit</button>
 						</fieldset>
 					</Form>
