@@ -22,6 +22,7 @@ export default class Item extends Component {
 				<Title>
 					<Link
 						href={{
+							// the pathname (item) is linked to page name
 							pathname: '/item',
 							query: { id: item.id }
 						}}
@@ -35,7 +36,7 @@ export default class Item extends Component {
 				<div className='buttonList'>
 					<Link
 						href={{
-							pathname: 'update',
+							pathname: '/update',
 							query: { id: item.id }
 						}}
 					>
